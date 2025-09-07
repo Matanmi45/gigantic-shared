@@ -19,7 +19,7 @@ jobs:
           # cache: 'npm'
       - run: npm install
       - run: npm run build
-      - run: echo @matanmi45:https://npm.pkg.github.com/ > build/.npmrc
+      - run: echo @Matanmi45:https://npm.pkg.github.com/ > build/.npmrc
           echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> build/.npmrc
       - run: npm publish
         working-directory: ./build
