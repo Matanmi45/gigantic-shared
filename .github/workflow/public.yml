@@ -1,0 +1,27 @@
+name: publish
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  publish:
+    # name: Publish Package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22.x'
+          # cache: 'npm'
+      - run: npm install
+      - run: npm run build
+      - run: echo @matanmi45:https://npm.pkg.github.com/ > build/.npmrc
+          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> build/.npmrc
+      - run: npm publish
+        working-directory: ./build
+        env:
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
